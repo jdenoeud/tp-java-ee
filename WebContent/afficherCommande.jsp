@@ -6,7 +6,11 @@
         <title>Affichage d'une commande</title>
         <link type="text/css" rel="stylesheet" href="inc/style.css" />
     </head>
+    
     <body>
+    
+    	<div> <c:import url="inc/menu.jsp"/> </div>
+    
         <%-- Affichage de la chaîne "message" transmise par la servlet --%>
         <p class="info">${ message }</p>
         <%-- Puis affichage des données enregistrées dans le bean "commande" transmis par la servlet --%>

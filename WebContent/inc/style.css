@@ -1,5 +1,3 @@
-@charset "UTF-8";
-
 /* Général ------------------------------------------------------------------------------------- */
 
 body, p, legend, label, input {
@@ -49,4 +47,14 @@ form input.sansLabel {
 .info {
     font-style: italic;
     color: #E8A22B;
+}
+
+/* Blocs constituants -------------------------------------------------------------------------- */
+div#menu{
+	border: 1px solid #0568CD;
+	padding: 10px;
+	margin: 10px;
+}
+div#corps{
+	margin: 10px;
 }
