@@ -3,11 +3,11 @@
   <display-name>tpFilRouge</display-name>
   <servlet>
     <servlet-name>Client</servlet-name>
-    <servlet-class>com.sdze.servlets.CreationClient</servlet-class>
+    <servlet-class>com.sdz.servlets.CreationClient</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>Client</servlet-name>
-    <url-pattern>/CreationClient</url-pattern>
+    <url-pattern>/creationClient</url-pattern>
   </servlet-mapping>
   
   <servlet>
@@ -16,6 +16,6 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>Commande</servlet-name>
-    <url-pattern>/CreationCommande</url-pattern>
+    <url-pattern>/creationCommande</url-pattern>
   </servlet-mapping>
 </web-app>
