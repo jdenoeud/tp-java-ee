@@ -13,7 +13,7 @@
         <div>
             <form method="get" action="creationCommande">
             
-                <c:imports url="inc/inc_client_form.jsp"/>
+                <c:import url="inc/inc_client_form.jsp"/>
                 
                 <fieldset>
                     <legend>Informations commande</legend>
