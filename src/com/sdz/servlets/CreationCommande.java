@@ -1,4 +1,4 @@
-package com.sdzee.tp.servlets;
+package com.sdz.servlets;
 
 import java.io.IOException;
 

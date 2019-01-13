@@ -1,4 +1,4 @@
-package com.sdzee.tp.forms;
+package com.sdz.forms;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,8 +9,8 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import com.sdzee.tp.beans.Client;
-import com.sdzee.tp.beans.Commande;
+import com.sdz.beans.Client;
+import com.sdz.beans.Commande;
 
 public final class CreationCommandeForm {
     private static final String CHAMP_DATE             = "dateCommande";

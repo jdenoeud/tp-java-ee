@@ -35,11 +35,11 @@ public class CreationClientForm {
 	public Client creerClient( HttpServletRequest request) {
     	
     	//Récupération des paramètres de la requete
-		String nom = request.getParameter( CHAMP_NOM );
-	    String prenom = request.getParameter( CHAMP_PRENOM );
-	    String adresse = request.getParameter( CHAMP_ADRESSE );
-	    String telephone = request.getParameter( CHAMP_TELEPHONE );
-	    String email = request.getParameter( CHAMP_EMAIL );
+		String nom = getValeurChamp( request, CHAMP_NOM );
+	    String prenom = getValeurChamp( request, CHAMP_PRENOM );
+	    String adresse = getValeurChamp( request, CHAMP_ADRESSE );
+	    String telephone = getValeurChamp( request, CHAMP_TELEPHONE );
+	    String email = getValeurChamp( request, CHAMP_EMAIL );
 	    
 	    //Création du client 
 		Client client = new Client();
