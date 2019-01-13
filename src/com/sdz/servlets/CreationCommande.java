@@ -42,7 +42,8 @@ public class CreationCommande extends HttpServlet {
  
     public static final String FORMAT_DATE            = "dd/MM/yyyy HH:mm:ss";
  
-    public static final String VUE                    = "/afficherCommande.jsp";
+    public static final String VUE_FORM="/WEB-INF/creerCommande.jsp";
+	public static final String VUE_SUCCESS="/WEB-INF/afficherCommande.jsp";
 
        
 
@@ -53,6 +54,10 @@ public class CreationCommande extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		this.getServletContext().getRequestDispatcher( VUE_FORM ).forward( request, response );
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		/*
          * Récupération des données saisies, envoyées en tant que paramètres de
          * la requête GET générée à la validation du formulaire
@@ -122,11 +127,7 @@ public class CreationCommande extends HttpServlet {
         request.setAttribute( ATT_ERREUR, erreur );
 
         /* Transmission à la page JSP en charge de l'affichage des données */
-        this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+        this.getServletContext().getRequestDispatcher( VUE_SUCCESS ).forward( request, response );
 		
 	}
 

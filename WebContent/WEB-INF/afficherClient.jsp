@@ -5,11 +5,11 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Données client</title>
-		 <link type="text/css" rel="stylesheet" href="inc/style.css" />
+		 <link type="text/css" rel="stylesheet" href="<c:url value="/inc/style.css" />" />
 	</head>
 <body>
 
-	<div> <c:import url="inc/menu.jsp"/> </div>
+	<div> <c:import url="/inc/menu.jsp"/> </div>
 	
 	<c:choose>
 		<c:when test="${!erreur}">

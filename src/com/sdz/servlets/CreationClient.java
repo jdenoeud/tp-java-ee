@@ -15,7 +15,8 @@ import com.sdz.beans.Client;
 
 public class CreationClient extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public static final String VUE="/afficherClient.jsp";
+	public static final String VUE_FORM="/WEB-INF/creerClient.jsp";
+	public static final String VUE_SUCCESS="/WEB-INF/afficherClient.jsp";
 	
 	public static final String ATT_CLIENT="client";
 	public static final String ATT_MESSAGE="message";
@@ -30,53 +31,54 @@ public class CreationClient extends HttpServlet {
 
     public CreationClient() {
         super();
-        // TODO Auto-generated constructor stub
+       
     }
 
 
+    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		
-		//Récupération des paramètres de la requete
-		String nom = request.getParameter( CHAMP_NOM );
-	    String prenom = request.getParameter( CHAMP_PRENOM );
-	    String adresse = request.getParameter( CHAMP_ADRESSE );
-	    String telephone = request.getParameter( CHAMP_TELEPHONE );
-	    String email = request.getParameter( CHAMP_EMAIL );
-	        
-        String message ;
-        boolean erreur;
-        
-        //vérification des paramètres rentrés
-        if(nom.isEmpty() || adresse.isEmpty() || telephone.isEmpty()) {
-        	message = "Veuillez remplir tous les champs oligatoires!"
-        			+ " <br> <a href=\"creerClient.jsp\">Cliquez ici</a> pour accéder au formulaire de création d'un client. ";
-        	erreur = true;
-        } else {
-        	message = "Client créé avec succès";
-        	erreur = false;
-        }
-		
-		//Création du client et initialisation des paramètres
-		Client client = new Client();
-		client.setNom(nom);
-		client.setNom( nom );
-	    client.setPrenom( prenom );
-	    client.setAdresse( adresse );
-	    client.setTelephone( telephone );
-	    client.setEmail( email );
-		
-	    request.setAttribute(ATT_CLIENT, client);
-	    request.setAttribute(ATT_MESSAGE, message);
-	    request.setAttribute(ATT_ERREUR, erreur);
-		
-		this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
+		this.getServletContext().getRequestDispatcher( VUE_FORM ).forward( request, response );
 		
 	}
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
+		//Récupération des paramètres de la requete
+				String nom = request.getParameter( CHAMP_NOM );
+			    String prenom = request.getParameter( CHAMP_PRENOM );
+			    String adresse = request.getParameter( CHAMP_ADRESSE );
+			    String telephone = request.getParameter( CHAMP_TELEPHONE );
+			    String email = request.getParameter( CHAMP_EMAIL );
+			        
+		        String message ;
+		        boolean erreur;
+		        
+		        //vérification des paramètres rentrés
+		        if(nom.isEmpty() || adresse.isEmpty() || telephone.isEmpty()) {
+		        	message = "Veuillez remplir tous les champs oligatoires!"
+		        			+ " <br> <a href=\"creerClient.jsp\">Cliquez ici</a> pour accéder au formulaire de création d'un client. ";
+		        	erreur = true;
+		        } else {
+		        	message = "Client créé avec succès";
+		        	erreur = false;
+		        }
+				
+				//Création du client et initialisation des paramètres
+				Client client = new Client();
+				client.setNom(nom);
+				client.setNom( nom );
+			    client.setPrenom( prenom );
+			    client.setAdresse( adresse );
+			    client.setTelephone( telephone );
+			    client.setEmail( email );
+				
+			    request.setAttribute(ATT_CLIENT, client);
+			    request.setAttribute(ATT_MESSAGE, message);
+			    request.setAttribute(ATT_ERREUR, erreur);
+				
+				this.getServletContext().getRequestDispatcher( VUE_SUCCESS ).forward( request, response );
 		
 	}
 
