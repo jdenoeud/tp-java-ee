@@ -1,6 +1,7 @@
 package com.sdz.forms;
-package com.sdz.beans;
 
+
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,11 +15,22 @@ public class CreationClientForm {
     private static final String CHAMP_TELEPHONE = "telephoneClient";
     private static final String CHAMP_EMAIL     = "emailClient";
     
-    private Map<String, String> erreurs = new HashMap<String, String>();
+    private String message;
     
- 
+    public String getMessage() {
+		return message;
+	}
 
-	
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	private Map<String, String> erreurs = new HashMap<String, String>();
+    	
+	public Map<String, String> getErreurs() {
+		return erreurs;
+	}
+
 	//Méthode principale, contenant la logique de validation
 	public Client creerClient( HttpServletRequest request) {
     	
@@ -45,7 +57,7 @@ public class CreationClientForm {
 	    } catch ( Exception e ) {
 	        setErreur( CHAMP_PRENOM, e.getMessage() );
 	    }
-		client.setPrenom(nom);
+		client.setPrenom(prenom);
 		
 		try {
 	        validationAdresse( adresse );
@@ -68,6 +80,12 @@ public class CreationClientForm {
 	    }
 	    client.setEmail( email );
 	    
+	    if (erreurs.isEmpty()){
+	    	message = "Succès de la création du client";
+	    }else {
+	    	message = "Echec de la création du client";
+	    	
+	    }
 	    
     	return client;
     } 
@@ -83,7 +101,7 @@ public class CreationClientForm {
 	}
 	
 	private void validationPrenom(String prenom) throws Exception {
-		if (prenom.lengt <h() < 2) {
+		if (prenom.length()  < 2) {
 			throw new Exception("Le prénom doit contenir au moins 2 caractères ");
 		}
 	}
@@ -119,5 +137,14 @@ public class CreationClientForm {
 	private void setErreur(String champ, String value) {
 		erreurs.put(champ, value);
 	} 
+	
+	private static String getValeurChamp( HttpServletRequest request, String nomChamp ) {
+	    String valeur = request.getParameter( nomChamp );
+	    if ( valeur == null || valeur.trim().length() == 0 ) {
+	        return null;
+	    } else {
+	        return valeur.trim();
+	    }
+	}
     
 }

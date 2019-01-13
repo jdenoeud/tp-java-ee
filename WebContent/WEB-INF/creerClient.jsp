@@ -15,6 +15,10 @@
             
                 <c:import url="/inc/inc_client_form.jsp"/> 
                 
+                
+                <p class="info"><c:out value="${ form.message }"/></p>
+               
+                
                 <input type="submit" value="Valider"  />
                 <input type="reset" value="Remettre à zéro" /> <br />
             </form>
