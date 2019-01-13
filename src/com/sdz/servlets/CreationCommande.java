@@ -95,7 +95,7 @@ public class CreationCommande extends HttpServlet {
          */
         if ( nom.trim().isEmpty() || adresse.trim().isEmpty() || telephone.trim().isEmpty() || montant == -1
                 || modePaiement.isEmpty() || modeLivraison.isEmpty() ) {
-            message = "Erreur - Vous n'avez pas rempli tous les champs obligatoires. <br> <a href=\"creerCommande.jsp\">Cliquez ici</a> pour accéder au formulaire de création d'une commande.";
+            message = "Erreur - Vous n'avez pas rempli tous les champs obligatoires. <br> <a href=\"creationCommande\">Cliquez ici</a> pour accéder au formulaire de création d'une commande.";
             erreur = true;
         } else {
             message = "Commande créée avec succès !";

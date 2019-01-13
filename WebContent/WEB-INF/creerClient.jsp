@@ -8,12 +8,12 @@
     </head>
     <body>
     
-    	<div> <c:import url="../inc/menu.jsp"/> </div>
+    	<div> <c:import url="/inc/menu.jsp"/> </div>
     
         <div>
             <form method="post" action="<c:url value="/creationClient" />">
             
-                <c:import url="../inc/inc_client_form.jsp"/> 
+                <c:import url="/inc/inc_client_form.jsp"/> 
                 
                 <input type="submit" value="Valider"  />
                 <input type="reset" value="Remettre à zéro" /> <br />

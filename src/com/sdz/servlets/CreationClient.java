@@ -58,7 +58,7 @@ public class CreationClient extends HttpServlet {
 		        //vérification des paramètres rentrés
 		        if(nom.isEmpty() || adresse.isEmpty() || telephone.isEmpty()) {
 		        	message = "Veuillez remplir tous les champs oligatoires!"
-		        			+ " <br> <a href=\"creerClient.jsp\">Cliquez ici</a> pour accéder au formulaire de création d'un client. ";
+		        			+ " <br> <a href=\"creationClient\">Cliquez ici</a> pour accéder au formulaire de création d'un client. ";
 		        	erreur = true;
 		        } else {
 		        	message = "Client créé avec succès";
@@ -68,7 +68,6 @@ public class CreationClient extends HttpServlet {
 				//Création du client et initialisation des paramètres
 				Client client = new Client();
 				client.setNom(nom);
-				client.setNom( nom );
 			    client.setPrenom( prenom );
 			    client.setAdresse( adresse );
 			    client.setTelephone( telephone );
