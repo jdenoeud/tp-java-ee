@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:jsp="http://java.sun.com/xml/ns/javaee/jsp" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
   <display-name>tpFilRouge</display-name>
   <servlet>
     <servlet-name>Client</servlet-name>
@@ -9,7 +9,6 @@
     <servlet-name>Client</servlet-name>
     <url-pattern>/creationClient</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>Commande</servlet-name>
     <servlet-class>com.sdz.servlets.CreationCommande</servlet-class>
@@ -18,11 +17,13 @@
     <servlet-name>Commande</servlet-name>
     <url-pattern>/creationCommande</url-pattern>
   </servlet-mapping>
-  
   <jsp-config>
-		<jsp-property-group>
-			<url-pattern>*.jsp</url-pattern>
-			<include-prelude>/WEB-INF/taglibs.jsp</include-prelude>
-		</jsp-property-group>
-	</jsp-config>
+    <jsp-property-group>
+      <url-pattern>*.jsp</url-pattern>
+      <include-prelude>/WEB-INF/taglibs.jsp</include-prelude>
+    </jsp-property-group>
+  </jsp-config>
+  <listener>
+    <listener-class>com.sdzee.config.InitialisationDaoFactory</listener-class>
+  </listener>
 </web-app>
