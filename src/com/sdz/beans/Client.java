@@ -1,11 +1,16 @@
 package com.sdz.beans;
 
-public class Client {
+import java.io.Serializable;
+
+public class Client implements Serializable {
+	
+	private Long id;
 	private String nom;
 	private String prenom;
 	private String adresse;
 	private String telephone;
 	private String email;
+	private String image;
 	
 	public String getNom() {
 		return nom;
@@ -36,6 +41,18 @@ public class Client {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 }

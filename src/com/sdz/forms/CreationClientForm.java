@@ -7,22 +7,32 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import com.sdz.beans.Client;
+import com.sdz.dao.ClientDao;
+import com.sdz.dao.DAOException;
 
-public class CreationClientForm {
+public final class CreationClientForm {
 	private static final String CHAMP_NOM       = "nomClient";
     private static final String CHAMP_PRENOM    = "prenomClient";
     private static final String CHAMP_ADRESSE   = "adresseClient";
     private static final String CHAMP_TELEPHONE = "telephoneClient";
     private static final String CHAMP_EMAIL     = "emailClient";
     
-    private String message;
+    private ClientDao clientDao;
     
-    public String getMessage() {
-		return message;
+  //Constructeur 
+    public CreationClientForm ( ClientDao clientDao) {
+    	this.clientDao = clientDao;
+    }
+    
+    private String resultat;
+ 
+
+	public String getResultat() {
+		return resultat;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
+	public void setResultat(String resultat) {
+		this.resultat = resultat;
 	}
 
 	private Map<String, String> erreurs = new HashMap<String, String>();
@@ -31,7 +41,7 @@ public class CreationClientForm {
 		return erreurs;
 	}
 
-	//Méthode principale, contenant la logique de validation
+	//Méthode principale, contenant la logique de validation et la creation d'un client en BDD
 	public Client creerClient( HttpServletRequest request) {
     	
     	//Récupération des paramètres de la requete
@@ -44,51 +54,128 @@ public class CreationClientForm {
 	    //Création du client 
 		Client client = new Client();
 		
-		// Vérification et initialisation des paramètres
-		try {
-	        validationNom( nom );
-	    } catch ( Exception e ) {
-	        setErreur( CHAMP_NOM, e.getMessage() );
-	    }
-		client.setNom(nom);
+		 traiterNom( nom, client );
+	        traiterPrenom( prenom, client );
+	        traiterAdresse( adresse, client );
+	        traiterTelephone( telephone, client );
+	        traiterEmail( email, client );
+	        traiterImage( client, request, chemin );
 		
-		try {
-	        validationPrenom( prenom );
-	    } catch ( Exception e ) {
-	        setErreur( CHAMP_PRENOM, e.getMessage() );
-	    }
-		client.setPrenom(prenom);
+		try  {
+			if (erreurs.isEmpty()) {
+				//Creation du client en BDD
+				clientDao.creer(client);
+				//
+				resultat = "Pas d'erreurs, creation du client";
+			} else {
+				resultat = "Erreurs empechant de rentrer le client en BDD";
+			}
+		} catch ( DAOException e ) {
+			setErreur("imprevu", "Erreur lors de la création du client en BDD");
+			resultat = "Erreur lors de l'enregistrement du clientr en bdd";
+			e.printStackTrace(); //Pour sortir le message d'erreur de l'exception
+		}
 		
-		try {
-	        validationAdresse( adresse );
-	    } catch ( Exception e ) {
-	        setErreur( CHAMP_ADRESSE, e.getMessage() );
-	    }
-	    client.setAdresse( adresse );
-	    
-	    try {
-	        validationTelephone( telephone );
-	    } catch ( Exception e ) {
-	        setErreur( CHAMP_TELEPHONE, e.getMessage() );
-	    }
-	    client.setTelephone( telephone );
-	    
-	    try {
-	        validationEmail( email );
-	    } catch ( Exception e ) {
-	        setErreur( CHAMP_EMAIL, e.getMessage() );
-	    }
-	    client.setEmail( email );
-	    
-	    if (erreurs.isEmpty()){
-	    	message = "Succès de la création du client";
-	    }else {
-	    	message = "Echec de la création du client";
-	    	
-	    }
-	    
-    	return client;
-    } 
+				
+		  private void traiterNom( String nom, Client client ) {
+		        try {
+		            validationNom( nom );
+		        } catch ( FormValidationException e ) {
+		            setErreur( CHAMP_NOM, e.getMessage() );
+		        }
+		        client.setNom( nom );
+		    }
+
+		    private void traiterPrenom( String prenom, Client client ) {
+		        try {
+		            validationPrenom( prenom );
+		        } catch ( FormValidationException e ) {
+		            setErreur( CHAMP_PRENOM, e.getMessage() );
+		        }
+		        client.setPrenom( prenom );
+		    }
+
+		    private void traiterAdresse( String adresse, Client client ) {
+		        try {
+		            validationAdresse( adresse );
+		        } catch ( FormValidationException e ) {
+		            setErreur( CHAMP_ADRESSE, e.getMessage() );
+		        }
+		        client.setAdresse( adresse );
+		    }
+
+		    private void traiterTelephone( String telephone, Client client ) {
+		        try {
+		            validationTelephone( telephone );
+		        } catch ( FormValidationException e ) {
+		            setErreur( CHAMP_TELEPHONE, e.getMessage() );
+		        }
+		        client.setTelephone( telephone );
+		    }
+
+		    private void traiterEmail( String email, Client client ) {
+		        try {
+		            validationEmail( email );
+		        } catch ( FormValidationException e ) {
+		            setErreur( CHAMP_EMAIL, e.getMessage() );
+		        }
+		        client.setEmail( email );
+		    }
+
+		    private void traiterImage( Client client, HttpServletRequest request, String chemin ) {
+		        String image = null;
+		        try {
+		            image = validationImage( request, chemin );
+		        } catch ( FormValidationException e ) {
+		            setErreur( CHAMP_IMAGE, e.getMessage() );
+		        }
+		        client.setImage( image );
+		    }
+
+		    private void validationNom( String nom ) throws FormValidationException {
+		        if ( nom != null ) {
+		            if ( nom.length() < 2 ) {
+		                throw new FormValidationException( "Le nom d'utilisateur doit contenir au moins 2 caractères." );
+		            }
+		        } else {
+		            throw new FormValidationException( "Merci d'entrer un nom d'utilisateur." );
+		        }
+		    }
+
+		    private void validationPrenom( String prenom ) throws FormValidationException {
+		        if ( prenom != null && prenom.length() < 2 ) {
+		            throw new FormValidationException( "Le prénom d'utilisateur doit contenir au moins 2 caractères." );
+		        }
+		    }
+
+		    private void validationAdresse( String adresse ) throws FormValidationException {
+		        if ( adresse != null ) {
+		            if ( adresse.length() < 10 ) {
+		                throw new FormValidationException( "L'adresse de livraison doit contenir au moins 10 caractères." );
+		            }
+		        } else {
+		            throw new FormValidationException( "Merci d'entrer une adresse de livraison." );
+		        }
+		    }
+
+		    private void validationTelephone( String telephone ) throws FormValidationException {
+		        if ( telephone != null ) {
+		            if ( !telephone.matches( "^\\d+$" ) ) {
+		                throw new FormValidationException( "Le numéro de téléphone doit uniquement contenir des chiffres." );
+		            } else if ( telephone.length() < 4 ) {
+		                throw new FormValidationException( "Le numéro de téléphone doit contenir au moins 4 chiffres." );
+		            }
+		        } else {
+		            throw new FormValidationException( "Merci d'entrer un numéro de téléphone." );
+		        }
+		    }
+
+		    private void validationEmail( String email ) throws FormValidationException {
+		        if ( email != null && !email.matches( "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)" ) ) {
+		            throw new FormValidationException( "Merci de saisir une adresse mail valide." );
+		        }
+		    }
+
 	
 	private void validationNom(String nom) throws Exception {
 		if (nom!= null) {

@@ -99,7 +99,7 @@ public class ClientDaoImpl implements ClientDao {
 	         } else {
 	        	 client.setId(null);
 	         
-	     } catch ( SQLException e ) {
+	     } }catch ( SQLException e ) {
 	         throw new DAOException( e );
 	     } finally {
 	         fermeturesSilencieuses( valeursAutoGenerees, preparedStatement, connexion );
@@ -107,33 +107,38 @@ public class ClientDaoImpl implements ClientDao {
 
 	}
 	
-	private Client trouver( String sql, Object... objets) {
-		Connection connexion = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        Client client = null;
+	     /*
+	      * Méthode générique utilisée pour retourner un client depuis la base de
+	      * données, correspondant à la requête SQL donnée prenant en paramètres les
+	      * objets passés en argument.
+	      */
+	     private Client trouver( String sql, Object... objets ) throws DAOException {
+	         Connection connexion = null;
+	         PreparedStatement preparedStatement = null;
+	         ResultSet resultSet = null;
+	         Client client = null;
 
-        try {
-        	//On lance la connexion
-            connexion = daoFactory.getConnection();
-            
-            //Préparation  de la requête
-            preparedStatement = initialisationRequetePreparee( connexion, sql, false, objets );
-            resultSet = preparedStatement.executeQuery();
-            
-            /* Parcours de la ligne de donnÃ©es retournÃ©e dans le ResultSet */
-            if ( resultSet.next() ) {
-                client = map( resultSet );
-            }
-        } catch ( SQLException e ) {
-            throw new DAOException( e );
-        } finally {
-            fermeturesSilencieuses( resultSet, preparedStatement, connexion );
-        }
+	         try {
+	             /* Récupération d'une connexion depuis la Factory */
+	             connexion = daoFactory.getConnection();
+	             /*
+	              * Préparation de la requête avec les objets passés en arguments
+	              * (ici, uniquement un id) et exécution.
+	              */
+	             preparedStatement = initialisationRequetePreparee( connexion, sql, false, objets );
+	             resultSet = preparedStatement.executeQuery();
+	             /* Parcours de la ligne de données retournée dans le ResultSet */
+	             if ( resultSet.next() ) {
+	                 client = map( resultSet );
+	             }
+	         } catch ( SQLException e ) {
+	             throw new DAOException( e );
+	         } finally {
+	             fermeturesSilencieuses( resultSet, preparedStatement, connexion );
+	         }
 
-        return client;
-	}
-	}
+	         return client;
+	     }
 	
 	
 	/*
